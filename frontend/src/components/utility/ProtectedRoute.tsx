@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { AUTH_PATH } from "../shared/paths";
-import { AuthContext } from "./auth/AuthProvider";
+import { AUTH_PATH } from "../../shared/paths";
+import { AuthContext } from "../auth/AuthProvider";
 
 interface IProtectedRoute {
     children?: React.ReactNode;

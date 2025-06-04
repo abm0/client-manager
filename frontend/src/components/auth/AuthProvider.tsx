@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 import { UseMutateFunction, useQueryClient } from "@tanstack/react-query";
 import { type Credentials } from "../../api/auth";
 import { ACCESS_TOKEN_LS_KEY, REFRESH_TOKEN_LS_KEY } from "../../shared/constants";
-import { useLoginMutation } from "../../mutations/auth.mutation";
+import { useLoginMutation } from "../../api/mutations/auth.mutation";
 
 type AuthContextType = {
   isAuthenticated?: boolean;

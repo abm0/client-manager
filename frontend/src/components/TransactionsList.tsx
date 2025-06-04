@@ -1,5 +1,5 @@
 import { AddIcon } from '@chakra-ui/icons';
-import { Box, HStack, IconButton, Spacer, Table, TableCaption, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
+import { Box, HStack, IconButton, Spacer, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import React from 'react';
 
 const transactions = [{

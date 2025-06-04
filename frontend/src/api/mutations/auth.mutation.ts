@@ -1,6 +1,6 @@
 import { useMutation, UseMutationOptions } from "@tanstack/react-query"
-import { Credentials, login, register, UserInfo } from "../api/auth";
-import { ACCESS_TOKEN_LS_KEY, REFRESH_TOKEN_LS_KEY } from "../shared/constants";
+import { Credentials, login, register, UserInfo } from "../auth";
+import { ACCESS_TOKEN_LS_KEY, REFRESH_TOKEN_LS_KEY } from "../../shared/constants";
 
 export const useLoginMutation = (options?: UseMutationOptions<Credentials, Error, Credentials>) =>
   useMutation({

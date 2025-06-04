@@ -11,7 +11,7 @@ import { AUTH_PATH, CLIENT_PATH, MAIN_PATH, REGISTER_PATH } from './shared/paths
 import ClientPage from './pages/ClientPage';
 import { AuthLayout } from './layouts/AuthLayout';
 import { AuthPage } from './pages/AuthPage';
-import { ProtectedRoute } from './components/ProtectedRoute';
+import { ProtectedRoute } from './components/utility/ProtectedRoute';
 import { AuthProvider } from './components/auth/AuthProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -39,7 +39,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <Route index element={<MainPage />} />
                 <Route
                   path={CLIENT_PATH}
-                  element={<MainLayout headerContent={<Header />} />}
                 >
                   <Route index element={<ClientPage />} />
                 </Route>

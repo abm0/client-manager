@@ -1,13 +1,13 @@
 import { Card, CardBody, CardHeader, Center, HStack, Heading, Spacer, Stack, StackDivider, Tab, TabList, Tabs, Text, VStack } from "@chakra-ui/react";
 import { isEmpty } from "lodash";
 import { ClientStatus } from "./ClientStatus";
-import { EngagementStatus } from "./EngagementStatus";
+import { EngagementStatus } from "../EngagementStatus";
 import { useNavigate } from "react-router-dom";
-import { CLIENT_PATH } from "../shared/paths";
+import { CLIENT_PATH } from "../../shared/paths";
 import { ClientSearch } from "./ClientSearch";
-import { useLoadClients } from "../queries/clients.query";
-import { useLoadClientStatuses } from "../queries/statuses.query";
-import { Client, type ClientStatus as ClientStatusType } from "../models/types";
+import { useLoadClients } from "../../api/queries/client.query";
+import { useLoadClientStatuses } from "../../api/queries/status.query";
+import { Client, type ClientStatus as ClientStatusType } from "../../models/types";
 import { useState } from "react";
 
 // const client1 = {
@@ -45,14 +45,16 @@ const ClientsList = () => {
   
   const navigate = useNavigate();
   
-  if (isEmpty(clients)) {
-    return (
-      <Center>
+  const emptyContent = (
+    <Center>
         <Text>
-          Ничего не найдено
+          Клиенты не найдены
         </Text>
       </Center>
-    );
+  );
+  
+  if (isEmpty(clients)) {
+    return emptyContent;
   }
 
   const filteredClients = clients.filter((client: Client) => {
@@ -67,11 +69,9 @@ const ClientsList = () => {
       isFilteredStatus = status === 'Отказ';
     }
 
-    const clientFullName = `${client.first_name} ${client.last_name} ${client.patronymic ?? ''}`.toLowerCase();
-
     const normalizedSearchValue = searchValue.trim().toLowerCase();
     
-    const isFilteredName = clientFullName.toLowerCase().includes(normalizedSearchValue);
+    const isFilteredName = client.full_name.toLowerCase().includes(normalizedSearchValue);
 
     return isFilteredStatus && isFilteredName;
   });
@@ -84,7 +84,7 @@ const ClientsList = () => {
         <Stack divider={<StackDivider />} spacing={2}>
           <CardHeader>
             <VStack spacing={2} alignItems="start">
-              <Heading size="md">{`${client.first_name} ${client.last_name} ${client.patronymic ?? ''}`}</Heading>
+              <Heading size="md">{client.full_name}</Heading>
               <HStack>
                 <Text size="xs">Вовлечённость:</Text>
                 {/* <EngagementStatus status={client.engagement} /> */}
@@ -130,20 +130,17 @@ const ClientsList = () => {
   })
   
   return (
-    <Tabs variant="solid-rounded" onChange={(index) => setTabIndex(index)} index={tabIndex}>
-      <TabList>
+    <Tabs variant="solid-rounded" onChange={(index) => setTabIndex(index)} index={tabIndex} height={'100%'} overflow={'hidden'}>
+      <TabList paddingBottom={4}> 
         {tabs.map((tab) => (
           <Tab key={tab}>
             {tab}
           </Tab>  
         ))}
       </TabList>
-      <Spacer height={4} />
-      <VStack gap={4} alignItems="stretch">
-        <ClientSearch value={searchValue} onChange={(v) => setSearchValue(v)} />
-        <VStack gap={4} alignItems="stretch">
-          {listElements}
-        </VStack>
+      <ClientSearch value={searchValue} onChange={(v) => setSearchValue(v)} />
+      <VStack gap={4} alignItems="stretch" overflow="auto" height="calc(100% - 112px)" margin="0 -16px" padding="0 16px">
+        {filteredClients.length === 0 ? emptyContent : listElements}
       </VStack>
     </Tabs>
   );

@@ -14,6 +14,7 @@ export type Client = {
   first_name: string;
   id: number;
   last_name: string;
+  full_name: string;
   patronymic: string;
   phone: string;
   status: number;

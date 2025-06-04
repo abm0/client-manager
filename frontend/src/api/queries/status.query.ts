@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { loadClientStatuses, loadTransactionStatuses } from "../api/statuses";
+import { loadClientStatuses, loadTransactionStatuses } from "../statuses";
 
 export const useLoadClientStatuses = () =>
   useQuery({

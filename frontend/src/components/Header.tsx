@@ -15,7 +15,7 @@ import {
 import { BellIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { Navbar } from "./Navbar";
 import { AuthContext } from "./auth/AuthProvider";
-import { useLoadProfile } from "../queries/profile.query";
+import { useLoadProfile } from "../api/queries/profile.query";
 
 interface IDrawerMenu {
   children: React.ReactNode;
@@ -71,15 +71,15 @@ const Header = () => {
           <DrawerMenu>
             <DrawerHeader>
               <ProfileInfo />
-              </DrawerHeader>
+            </DrawerHeader>
 
-              <DrawerBody>
-                <Navbar hidden={!isAuthenticated} />
-              </DrawerBody>
+            <DrawerBody>
+              <Navbar hidden={!isAuthenticated} />
+            </DrawerBody>
 
-              <DrawerFooter justifyContent="space-between">
-                  <Button size="sm" hidden={!isAuthenticated} onClick={() => logout()}>Выйти из профиля</Button>
-              </DrawerFooter>
+            <DrawerFooter justifyContent="space-between">
+                <Button size="sm" hidden={!isAuthenticated} onClick={() => logout()}>Выйти из профиля</Button>
+            </DrawerFooter>
           </DrawerMenu>
         </HStack>
       )}

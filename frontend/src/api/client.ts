@@ -14,3 +14,7 @@ export type ClientData = {
 export const addClient = (clientData: ClientData) => api.post(apiPaths[ApiPathNames.CLIENTS], clientData);
 
 export const loadClients = () => api.get(apiPaths[ApiPathNames.CLIENTS]);
+
+export const deleteClient = (clientId: number) => api.delete(`${apiPaths[ApiPathNames.CLIENTS]}${clientId}/`);
+
+export const loadClient = (clientId: number) => api.get(`${apiPaths[ApiPathNames.CLIENTS]}${clientId}/`);

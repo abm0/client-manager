@@ -2,7 +2,7 @@ import { Field, Form } from "react-final-form";
 import { Button, Input, Stack, Text, useToast } from '@chakra-ui/react';
 import { isRequired } from "../../shared/validators";
 import { useState } from "react";
-import { useRegisterMutation } from "../../mutations/auth.mutation";
+import { useRegisterMutation } from "../../api/mutations/auth.mutation";
 
 type RegisterFormData = {
   username: string;

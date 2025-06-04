@@ -1,20 +1,21 @@
-import { Box, HStack, Heading, Spacer } from "@chakra-ui/react"
-import { AddClient } from "../components/AddClient"
-import { ClientSearch } from "../components/ClientSearch"
-import { ClientsList } from "../components/ClientsList"
+import { HStack, Heading, VStack } from "@chakra-ui/react"
+import { AddClient } from "../components/client/AddClient"
+import { ClientsList } from "../components/client/ClientsList"
+import { PageContainer } from "../components/utility/PageContainer"
 
 const MainPage = () => {
   return (
-    <Box>
-      <HStack justifyContent="space-between">
-        <Heading size="md">
-          Список клиентов:
-        </Heading>
-        <AddClient />
-      </HStack>
-      <Spacer height={6} />
-      <ClientsList />
-    </Box>
+    <PageContainer>
+      <VStack spacing={6} align="stretch" height={'100%'}>
+        <HStack justifyContent="space-between">
+          <Heading size="md">
+            Список клиентов:
+          </Heading>
+          <AddClient />
+        </HStack>
+        <ClientsList />
+      </VStack>
+    </PageContainer>
   )
 }
 

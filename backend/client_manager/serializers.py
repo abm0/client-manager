@@ -15,6 +15,11 @@ class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = '__all__'
+        
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['full_name'] = f"{instance.first_name} {instance.patronymic or ''} {instance.last_name}"
+        return representation
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:

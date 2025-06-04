@@ -1,11 +1,12 @@
 import { Button, Input, Select, Stack, Text } from '@chakra-ui/react';
 import { Field, Form } from 'react-final-form';
-import { isRequired } from '../shared/validators';
+import { isRequired } from '../../shared/validators';
 import { useState } from 'react';
 import InputMask from 'react-input-mask';
 import { useToast } from '@chakra-ui/react';
-import { useLoadClientStatuses } from '../queries/statuses.query';
-import { useAddClientMutation } from '../mutations/client.mutation';
+import { useLoadClientStatuses } from '../../api/queries/status.query';
+import { useAddClientMutation } from '../../api/mutations/client.mutation';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface IAddClientForm {
   onSubmit: () => void;
@@ -29,6 +30,8 @@ export const AddClientForm = (props: IAddClientForm) => {
   const { data: clientStatuses } = useLoadClientStatuses();
 
   const clientMutation = useAddClientMutation();
+
+  const queryClient = useQueryClient();
   
   const handleFormSubmit = async (values: ClientFormData) => {    
     console.log('form submit')
@@ -43,6 +46,8 @@ export const AddClientForm = (props: IAddClientForm) => {
           status: 'success',
           isClosable: true,
         })
+
+        queryClient.invalidateQueries({ queryKey: ['clients'] })
       },
       onError: () => {
         toast({
