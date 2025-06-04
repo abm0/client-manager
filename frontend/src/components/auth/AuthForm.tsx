@@ -1,58 +1,55 @@
 import { Field, Form } from "react-final-form";
 import { Button, Input, Stack, Text, useToast } from '@chakra-ui/react';
-import { isRequired } from "../shared/validators";
-import { loginFx } from "../models/auth.effects";
-import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { isRequired } from "../../shared/validators";
+import { useContext, useState } from "react";
+import { AuthContext } from "./AuthProvider";
+import { Credentials } from "../../api/auth";
 
-type AuthFormData = {
-  email: string;
-  password: string;
-}
 
 const AuthForm = () => {
-  const { t } = useTranslation();
   const toast = useToast()
+
+  const { login } = useContext(AuthContext);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleFormSubmit = async (values: AuthFormData) => {
+  const handleFormSubmit = async (values: Credentials) => {
     setIsSubmitting(true);
     
-    try {
-      await loginFx(values);
-
-      setIsSubmitting(false);
-      
-      toast({
-        title: t('success'),
-        description: t('message__log_in'),
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-    } catch(e) {
-      setIsSubmitting(false);
-
-      toast({
-        title: t('something_wrond'),
-        description: t('message__log_in_failed'),
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
+    await login(values, {
+      onSuccess: () => {
+        toast({
+          title: 'Успех!',
+          description: 'Пользователь успешно авторизован',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+      },
+      onError: () => {
+        toast({
+          title: 'Ошибка',
+          description: 'При авторизации произошла ошибка, возможно введены неверные данные пользователя',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      },
+      onSettled: () => {
+        setIsSubmitting(false);
+      },
+    });
   };
 
   return (
-    <Form<AuthFormData> onSubmit={handleFormSubmit}>
+    <Form<Credentials> onSubmit={handleFormSubmit}>
       {({ handleSubmit }) => (
         <Stack spacing={4}>
           <Field name="email" validate={isRequired}>
             {({ meta, input }) => (
               <Stack spacing={2}>
                 <Text>
-                  {t('email')}:
+                  Email:
                 </Text>
                 <Input name={input.name} isInvalid={meta.touched && meta.error} onChange={input.onChange} />
               </Stack>
@@ -63,7 +60,7 @@ const AuthForm = () => {
             {({ input, meta }) => (
               <Stack spacing={2}>
                 <Text>
-                  {t('password')}:
+                  Пароль:
                 </Text>
                 <Input type="password" name={input.name} isInvalid={meta.touched && meta.error} onChange={input.onChange} />
               </Stack>
@@ -72,13 +69,13 @@ const AuthForm = () => {
 
 
           <Button
-            colorScheme="teal"
+            colorScheme="blue"
             size="sm"
             width="auto"
             isLoading={isSubmitting}
             onClick={handleSubmit}
           >
-            {t('log_in')}
+            Авторизоваться
           </Button>
         </Stack>
       )}

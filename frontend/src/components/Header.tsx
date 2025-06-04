@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Button,
   Drawer,
@@ -9,21 +9,12 @@ import {
   DrawerHeader,
   DrawerOverlay,
   HStack,
-  Heading, IconButton, Image,
+  Heading, IconButton,
   Text, useDisclosure
 } from "@chakra-ui/react";
-import { $isAuthenticated,  } from "../models/auth";
-import { logout } from '../models/auth.events'
-import { useUnit } from "effector-react";
-import logo from '../assets/logo.svg';
-import { $profile } from "../models/user";
-import { LanguageSelect } from "./LanguageSelect";
-import { useTranslation } from "react-i18next";
 import { BellIcon, HamburgerIcon } from "@chakra-ui/icons";
-import { useIsMobile } from "../shared/hooks";
-import { Profile } from "./Profile";
-import { MAIN_PATH } from "../shared/constants";
 import { Navbar } from "./Navbar";
+import { AuthContext } from "./auth/AuthProvider";
 
 interface IDrawerMenu {
   children: React.ReactNode;
@@ -53,24 +44,31 @@ const DrawerMenu = ({ children }: IDrawerMenu) => {
 }
 
 const Header = () => {
-  const isAuthenticated = useUnit($isAuthenticated);
-  const profile = useUnit($profile);
-
-  const { t } = useTranslation();
-  const isMobile = useIsMobile();
-  
-  const appLogo = (
-    <HStack>
-      <Heading size="md" userSelect="none">Менеджер клиентов</Heading>
-    </HStack>
-  );
+  const { isAuthenticated, logout } = useContext(AuthContext);
   
   return (
     <HStack justify="space-between">
-      {appLogo}
+      <Heading size="md" userSelect="none">Менеджер клиентов</Heading>
       <IconButton size="sm" aria-label='foo'>
         <BellIcon />
       </IconButton> 
+      <DrawerMenu>
+        <DrawerHeader>
+          {isAuthenticated && (
+            <Text color="black">
+              foo
+            </Text>
+          )}
+          </DrawerHeader>
+
+          <DrawerBody>
+            <Navbar hidden={!isAuthenticated} />
+          </DrawerBody>
+
+          <DrawerFooter justifyContent="space-between">
+              <Button size="sm" hidden={!isAuthenticated} onClick={() => logout()}>Выйти из профиля</Button>
+          </DrawerFooter>
+      </DrawerMenu>
     </HStack>
   );
 }

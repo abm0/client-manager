@@ -8,14 +8,13 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 import { AddClientForm } from "./AddClientForm";
-import { useTranslation } from "react-i18next";
 
 export const AddClient = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
-      <Button colorScheme="teal" size="sm" onClick={onOpen}>
+      <Button colorScheme="blue" size="sm" onClick={onOpen}>
         Добавить клиента
       </Button>
       

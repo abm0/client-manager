@@ -7,33 +7,47 @@ import { Header } from './components/Header';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
 import './index.css';
-import './i18n/config';
-import { CLIENT_PATH, MAIN_PATH } from './shared/constants';
+import { AUTH_PATH, CLIENT_PATH, MAIN_PATH, REGISTER_PATH } from './shared/paths';
 import ClientPage from './pages/ClientPage';
+import { AuthLayout } from './layouts/AuthLayout';
+import { AuthPage } from './pages/AuthPage';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { AuthProvider } from './components/auth/AuthProvider';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route 
-            path={MAIN_PATH}
-            element={
-              <MainLayout headerContent={<Header />} />
-            }
-          >
-            <Route index element={<MainPage />} />
-          </Route>
-          <Route
-            path={CLIENT_PATH}
-            element={
-              <MainLayout headerContent={<Header />} />
-            }
-          >
-            <Route index element={<ClientPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path={AUTH_PATH} element={<AuthLayout headerContent={<Header />} />}>
+                <Route index element={<AuthPage />} />
+                <Route path={REGISTER_PATH} element={null} />
+              </Route>
+              <Route 
+                path={MAIN_PATH}
+                element={
+                  <ProtectedRoute>
+                    <MainLayout headerContent={<Header />} />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<MainPage />} />
+                <Route
+                  path={CLIENT_PATH}
+                  element={<MainLayout headerContent={<Header />} />}
+                >
+                  <Route index element={<ClientPage />} />
+                </Route>
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </QueryClientProvider>
     </ChakraProvider>
   </React.StrictMode>,
 )

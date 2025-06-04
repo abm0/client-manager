@@ -1,59 +1,59 @@
 import { Field, Form } from "react-final-form";
 import { Button, Input, Stack, Text, useToast } from '@chakra-ui/react';
-import { isRequired } from "../shared/validators";
-import { signupFx } from "../models/auth.effects";
-import { useTranslation } from "react-i18next";
+import { isRequired } from "../../shared/validators";
 import { useState } from "react";
+import { useRegisterMutation } from "../../mutations/auth.mutation";
 
 type RegisterFormData = {
-  name: string;
+  username: string;
   email: string;
   password: string;
 }
 
 const RegisterForm = () => {
-  const { t } = useTranslation();
   const toast = useToast()
+
+  const registerMutation = useRegisterMutation();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const handleFormSubmit = async (values: RegisterFormData) => {
     setIsSubmitting(true);
 
-    try {
-      await signupFx(values);
-
-      setIsSubmitting(false);
-
-      toast({
-        title: t('success'),
-        description: "Пользователь создан",
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      });
-    } catch(e) {
-      setIsSubmitting(false);
-        
-      toast({
-        title: t('something_wrong'),
-        description: "При создании пользователя произошла ошибка",
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
-    }
+    registerMutation.mutate(values, {
+      onSuccess: () => {
+        toast({
+          title: 'Успех!',
+          description: "Пользователь создан",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+      },
+      onError: () => {
+        toast({
+          title: 'Ошибка',
+          description: "При создании пользователя произошла ошибка",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      },
+      onSettled: () => {
+        setIsSubmitting(false);
+      },
+    })
   };
 
   return (
     <Form<RegisterFormData> onSubmit={handleFormSubmit}>
       {({ handleSubmit }) => (
         <Stack spacing={4}>
-          <Field name="name" validate={isRequired}>
+          <Field name="username" validate={isRequired}>
             {({ meta, input }) => (
               <Stack spacing={2}>
                 <Text>
-                  {t('user_name')}:
+                  Имя пользователя:
                 </Text>
                 <Input name={input.name} isInvalid={meta.touched && meta.error} onChange={input.onChange} />
               </Stack>
@@ -64,7 +64,7 @@ const RegisterForm = () => {
             {({ meta, input }) => (
               <Stack spacing={2}>
                 <Text>
-                  {t('email')}:
+                  Email:
                 </Text>
                 <Input name={input.name} isInvalid={meta.touched && meta.error} onChange={input.onChange} />
               </Stack>
@@ -75,7 +75,7 @@ const RegisterForm = () => {
             {({ input, meta }) => (
               <Stack spacing={2}>
                 <Text>
-                  {t('password')}:
+                  Пароль:
                 </Text>
                 <Input type="password" name={input.name} isInvalid={meta.touched && meta.error} onChange={input.onChange} />
               </Stack>
@@ -84,13 +84,13 @@ const RegisterForm = () => {
 
 
           <Button
-            colorScheme="teal"
+            colorScheme="blue"
             size="sm"
             width="auto"
             isLoading={isSubmitting}
             onClick={handleSubmit}
           >
-            {t('sign_in')}
+            Зарегистрировать
           </Button>
         </Stack>
       )}

@@ -1,10 +1,9 @@
-import { Card, CardBody, CardFooter, CardHeader, Center, HStack, Heading, Spacer, Stack, StackDivider, Tab, TabList, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Card, CardBody, CardHeader, Center, HStack, Heading, Spacer, Stack, StackDivider, Tab, TabList, Tabs, Text, VStack } from "@chakra-ui/react";
 import { isEmpty } from "lodash";
-import { useIsMobile } from "../shared/hooks";
 import { ClientStatus } from "./ClientStatus";
 import { EngagementStatus } from "./EngagementStatus";
 import { useNavigate } from "react-router-dom";
-import { CLIENT_PATH } from "../shared/constants";
+import { CLIENT_PATH } from "../shared/paths";
 import { ClientSearch } from "./ClientSearch";
 
 const client1 = {
@@ -29,7 +28,7 @@ const client2 = {
   engagement: 'high' as const,
 };
 
-const clients = [client1];
+const clients = [client1, client2];
 
 const ClientsList = () => {
   

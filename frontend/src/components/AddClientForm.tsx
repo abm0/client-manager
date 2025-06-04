@@ -1,38 +1,37 @@
 import { Button, Input, Select, Stack, Text } from '@chakra-ui/react';
 import { Field, Form } from 'react-final-form';
 import { isRequired } from '../shared/validators';
-import { uploadSongFx } from '../models/song.effects';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useToast } from '@chakra-ui/react';
 
-interface IAddSongForm {
+interface IAddClientForm {
   onSubmit: () => void;
 }
 
-export type SongFormData = {
-  title: string;
-  sourceFile: string | Blob;
+export type ClientFormData = {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  status: string;
 };
 
-export const AddClientForm = (props: IAddSongForm) => {
-  const { t } = useTranslation();
-  
+export const AddClientForm = (props: IAddClientForm) => {
   const toast = useToast()
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const handleFormSubmit = async (values: SongFormData) => {    
+  const handleFormSubmit = async (values: ClientFormData) => {    
     setIsSubmitting(true);
     
     try {
-      await uploadSongFx(values);
+      // await uploadSongFx(values);
 
       setIsSubmitting(false);
       
       toast({
-        title: t('success'),
-        description: t('message__file_uploaded'),
+        title: 'Успех!',
+        description: 'Клиент успешно добавлен',
         status: 'success',
         duration: 9000,
         isClosable: true,
@@ -43,8 +42,8 @@ export const AddClientForm = (props: IAddSongForm) => {
       setIsSubmitting(false);
 
       toast({
-        title: t('something_wrong'),
-        description: t('message__file_upload_failed'),
+        title: 'Что то пошло не так',
+        description: 'Произошла ошибка при добавлении клиента',
         status: 'error',
         duration: 9000,
         isClosable: true,
@@ -53,7 +52,7 @@ export const AddClientForm = (props: IAddSongForm) => {
   };
 
   return (
-    <Form<SongFormData> onSubmit={handleFormSubmit}>
+    <Form<ClientFormData> onSubmit={handleFormSubmit}>
         {({ handleSubmit }) => (
           <Stack spacing={4}>
             <Field name="name" validate={isRequired}>
@@ -97,7 +96,7 @@ export const AddClientForm = (props: IAddSongForm) => {
               )}
             </Field>
             <Field name="status" validate={isRequired}>
-              {({ meta, input }) => (
+              {() => (
                 <Stack spacing={2}>
                   <Text>
                     Статус:
@@ -116,7 +115,7 @@ export const AddClientForm = (props: IAddSongForm) => {
               )}
             </Field>
 
-            <Button loadingText={`${t('message__analysis_in_progess')}...`} isLoading={isSubmitting} colorScheme='teal' mr={3} size="sm" onClick={handleSubmit}>
+            <Button loadingText="Загрузка..." isLoading={isSubmitting} colorScheme='teal' mr={3} size="sm" onClick={handleSubmit}>
               Добавить
             </Button>
           </Stack>
