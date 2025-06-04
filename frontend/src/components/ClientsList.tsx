@@ -8,6 +8,7 @@ import { ClientSearch } from "./ClientSearch";
 import { useLoadClients } from "../queries/clients.query";
 import { useLoadClientStatuses } from "../queries/statuses.query";
 import { Client, type ClientStatus as ClientStatusType } from "../models/types";
+import { useState } from "react";
 
 // const client1 = {
 //   id: 1,
@@ -33,11 +34,14 @@ import { Client, type ClientStatus as ClientStatusType } from "../models/types";
 
 // const clients = [client1, client2];
 
+const tabs = ['Активные', 'Потенциальные', 'Отказ']
+
 const ClientsList = () => {
+  const [tabIndex, setTabIndex] = useState(0);
+  const [searchValue, setSearchValue] = useState('');
   
   const { data: clients } = useLoadClients();
   const { data: clientStatuses } = useLoadClientStatuses();
-  
   
   const navigate = useNavigate();
   
@@ -51,7 +55,28 @@ const ClientsList = () => {
     );
   }
 
-  const listElements = clients.map((client: Client) => {
+  const filteredClients = clients.filter((client: Client) => {
+    const status = clientStatuses.find((s: ClientStatusType) => s.id === client.status)?.name;
+
+    let isFilteredStatus = false
+    if (tabIndex === 0) {
+      isFilteredStatus = status === 'Активный';
+    } else if (tabIndex === 1) {
+      isFilteredStatus = status === 'Потенциальный';
+    } else if (tabIndex === 2) {
+      isFilteredStatus = status === 'Отказ';
+    }
+
+    const clientFullName = `${client.first_name} ${client.last_name} ${client.patronymic ?? ''}`.toLowerCase();
+
+    const normalizedSearchValue = searchValue.trim().toLowerCase();
+    
+    const isFilteredName = clientFullName.toLowerCase().includes(normalizedSearchValue);
+
+    return isFilteredStatus && isFilteredName;
+  });
+
+  const listElements = filteredClients.map((client: Client) => {
     const status = clientStatuses.find((s: ClientStatusType) => s.id === client.status)?.name
 
     return (
@@ -59,7 +84,7 @@ const ClientsList = () => {
         <Stack divider={<StackDivider />} spacing={2}>
           <CardHeader>
             <VStack spacing={2} alignItems="start">
-              <Heading size="md">{client.first_name + ' ' + client.last_name + ' ' + client.patronymic}</Heading>
+              <Heading size="md">{`${client.first_name} ${client.last_name} ${client.patronymic ?? ''}`}</Heading>
               <HStack>
                 <Text size="xs">Вовлечённость:</Text>
                 {/* <EngagementStatus status={client.engagement} /> */}
@@ -105,15 +130,17 @@ const ClientsList = () => {
   })
   
   return (
-    <Tabs>
+    <Tabs variant="solid-rounded" onChange={(index) => setTabIndex(index)} index={tabIndex}>
       <TabList>
-        <Tab>Активные</Tab>
-        <Tab>Потенциальне</Tab>
-        <Tab>Отказ</Tab>
+        {tabs.map((tab) => (
+          <Tab key={tab}>
+            {tab}
+          </Tab>  
+        ))}
       </TabList>
       <Spacer height={4} />
       <VStack gap={4} alignItems="stretch">
-        <ClientSearch />
+        <ClientSearch value={searchValue} onChange={(v) => setSearchValue(v)} />
         <VStack gap={4} alignItems="stretch">
           {listElements}
         </VStack>
