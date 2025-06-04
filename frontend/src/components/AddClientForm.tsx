@@ -33,7 +33,6 @@ export const AddClientForm = (props: IAddClientForm) => {
         title: 'Успех!',
         description: 'Клиент успешно добавлен',
         status: 'success',
-        duration: 9000,
         isClosable: true,
       })
       
@@ -45,7 +44,6 @@ export const AddClientForm = (props: IAddClientForm) => {
         title: 'Что то пошло не так',
         description: 'Произошла ошибка при добавлении клиента',
         status: 'error',
-        duration: 9000,
         isClosable: true,
       });
     }
@@ -115,7 +113,7 @@ export const AddClientForm = (props: IAddClientForm) => {
               )}
             </Field>
 
-            <Button loadingText="Загрузка..." isLoading={isSubmitting} colorScheme='teal' mr={3} size="sm" onClick={handleSubmit}>
+            <Button loadingText="Загрузка..." isLoading={isSubmitting} colorScheme='blue' mr={3} size="sm" onClick={handleSubmit}>
               Добавить
             </Button>
           </Stack>

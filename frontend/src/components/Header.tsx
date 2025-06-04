@@ -15,7 +15,7 @@ import {
 import { BellIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { Navbar } from "./Navbar";
 import { AuthContext } from "./auth/AuthProvider";
-import { useLoadProfile } from "../queries/fetchUser.query";
+import { useLoadProfile } from "../queries/loadProfile.query";
 
 interface IDrawerMenu {
   children: React.ReactNode;
@@ -44,37 +44,45 @@ const DrawerMenu = ({ children }: IDrawerMenu) => {
   )
 }
 
+const ProfileInfo = () => {
+  const { data: profileData } = useLoadProfile();
+
+  return (
+    <Text color="black">
+      {profileData?.email}
+    </Text>
+  );
+};
+
 const Header = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
 
-  const { data: profileData } = useLoadProfile();
+
   
   return (
     <HStack justify="space-between">
       <Heading size="md" userSelect="none">Менеджер клиентов</Heading>
 
-      <HStack>
-        <IconButton size="sm" aria-label='foo'>
-          <BellIcon />
-        </IconButton> 
-        <DrawerMenu>
-          <DrawerHeader>
-            {isAuthenticated && (
-              <Text color="black">
-                {profileData.email}
-              </Text>
-            )}
-            </DrawerHeader>
+      {isAuthenticated && (
+        <HStack>
+          <IconButton size="sm" aria-label='foo'>
+            <BellIcon />
+          </IconButton> 
+          <DrawerMenu>
+            <DrawerHeader>
+              <ProfileInfo />
+              </DrawerHeader>
 
-            <DrawerBody>
-              <Navbar hidden={!isAuthenticated} />
-            </DrawerBody>
+              <DrawerBody>
+                <Navbar hidden={!isAuthenticated} />
+              </DrawerBody>
 
-            <DrawerFooter justifyContent="space-between">
-                <Button size="sm" hidden={!isAuthenticated} onClick={() => logout()}>Выйти из профиля</Button>
-            </DrawerFooter>
-        </DrawerMenu>
-      </HStack>
+              <DrawerFooter justifyContent="space-between">
+                  <Button size="sm" hidden={!isAuthenticated} onClick={() => logout()}>Выйти из профиля</Button>
+              </DrawerFooter>
+          </DrawerMenu>
+        </HStack>
+      )}
     </HStack>
   );
 }

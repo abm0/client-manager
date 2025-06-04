@@ -26,7 +26,6 @@ const RegisterForm = () => {
           title: 'Успех!',
           description: "Пользователь создан",
           status: 'success',
-          duration: 9000,
           isClosable: true,
         });
       },
@@ -35,7 +34,6 @@ const RegisterForm = () => {
           title: 'Ошибка',
           description: "При создании пользователя произошла ошибка",
           status: 'error',
-          duration: 9000,
           isClosable: true,
         });
       },

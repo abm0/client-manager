@@ -22,7 +22,6 @@ const AuthForm = () => {
           title: 'Успех!',
           description: 'Пользователь успешно авторизован',
           status: 'success',
-          duration: 5000,
           isClosable: true,
         });
       },
@@ -31,7 +30,6 @@ const AuthForm = () => {
           title: 'Ошибка',
           description: 'При авторизации произошла ошибка, возможно введены неверные данные пользователя',
           status: 'error',
-          duration: 5000,
           isClosable: true,
         });
       },

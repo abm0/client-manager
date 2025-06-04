@@ -14,7 +14,6 @@ class Client(models.Model):
     name = models.CharField(max_length=50)
     email = models.CharField(max_length=30)
     phone = models.CharField(max_length=30)
-    status = models.CharField(max_length=10)
     company = models.CharField(max_length=50)
     status = models.ForeignKey(ClientStatus, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='clients', null=True)

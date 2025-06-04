@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { UseMutateFunction } from "@tanstack/react-query";
+import { UseMutateFunction, useQueryClient } from "@tanstack/react-query";
 import { type Credentials } from "../../api/auth";
 import { ACCESS_TOKEN_LS_KEY, REFRESH_TOKEN_LS_KEY } from "../../shared/constants";
 import { useLoginMutation } from "../../mutations/auth.mutation";
@@ -23,6 +23,8 @@ type AuthProviderProps = {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem(ACCESS_TOKEN_LS_KEY));
 
+  const queryClient = useQueryClient();
+  
   const loginMutation = useLoginMutation({
     onSuccess: () => {
       setIsAuthenticated(true);
@@ -34,6 +36,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     localStorage.removeItem(ACCESS_TOKEN_LS_KEY);
     localStorage.removeItem(REFRESH_TOKEN_LS_KEY);
+
+    queryClient.resetQueries();
   };
 
   return (

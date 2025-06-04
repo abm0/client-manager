@@ -19,7 +19,7 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme} toastOptions={{ defaultOptions: { duration: 5000 } }}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <BrowserRouter>

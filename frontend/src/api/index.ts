@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ACCESS_TOKEN_LS_KEY, API_HOST, REFRESH_TOKEN_LS_KEY } from '../shared/constants';
+import { ACCESS_TOKEN_LS_KEY, API_HOST, ApiPathNames, apiPaths, REFRESH_TOKEN_LS_KEY } from '../shared/constants';
 import { AUTH_PATH } from '../shared/paths';
 
 const api = axios.create({
@@ -24,7 +24,7 @@ api.interceptors.response.use(
       try {
         const refresh_token = localStorage.getItem(REFRESH_TOKEN_LS_KEY);
 
-        const response = await axios.post('http://localhost:8000/api/token/refresh/', {
+        const response = await axios.post(`${API_HOST}/api${apiPaths[ApiPathNames.REFRESH]}`, {
           refresh: refresh_token,
         });
 
@@ -40,7 +40,10 @@ api.interceptors.response.use(
         // Очистка и редирект на login
         localStorage.removeItem(ACCESS_TOKEN_LS_KEY);
         localStorage.removeItem(REFRESH_TOKEN_LS_KEY);
-        window.location.href = AUTH_PATH;
+        console.log(window.location.href);
+        if (window.location.pathname !== AUTH_PATH) {
+          window.location.href = AUTH_PATH;
+        }
         return Promise.reject(refreshError);
       }
     }

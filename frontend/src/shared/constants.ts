@@ -12,7 +12,7 @@ export enum ApiPathNames {
  */
 export const apiPaths = {
     [ApiPathNames.TOKEN]: '/token/',
-    [ApiPathNames.REFRESH]: '/refresh/',
+    [ApiPathNames.REFRESH]: '/token/refresh/',
     [ApiPathNames.REGISTER]: '/register/',
     [ApiPathNames.PROFILE]: '/profile/',
 

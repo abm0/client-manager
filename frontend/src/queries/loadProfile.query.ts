@@ -5,9 +5,11 @@ export const useLoadProfile = () =>
   useQuery({
     queryKey: ['user'],
     queryFn: async () => {
+      console.log('query fn call')
       const { data } = await loadProfile();
 
       return data;
     },
     retry: false,
+    refetchOnMount: true,
   });
