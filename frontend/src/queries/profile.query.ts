@@ -1,15 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { loadProfile } from "../api/user";
+import { loadProfile } from "../api/profile";
 
 export const useLoadProfile = () =>
   useQuery({
-    queryKey: ['user'],
+    queryKey: ['profile'],
     queryFn: async () => {
-      console.log('query fn call')
       const { data } = await loadProfile();
 
       return data;
     },
     retry: false,
-    refetchOnMount: true,
   });

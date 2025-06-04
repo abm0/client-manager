@@ -1,0 +1,21 @@
+export type ClientStatus = {
+  id: number;
+  name: string;
+}
+
+export type TransactionStatus = {
+  id: number;
+  name: string;
+}
+
+export type Client = {
+  company: string;
+  email: string;
+  first_name: string;
+  id: number;
+  last_name: string;
+  patronymic: string;
+  phone: string;
+  status: number;
+  user: number;
+}

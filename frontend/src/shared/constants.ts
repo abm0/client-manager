@@ -5,6 +5,9 @@ export enum ApiPathNames {
     REFRESH,
     REGISTER,
     PROFILE,
+    CLIENT_STATUSES,
+    TRANSACTION_STATUSES,
+    CLIENTS,
 }
 
 /**
@@ -15,6 +18,9 @@ export const apiPaths = {
     [ApiPathNames.REFRESH]: '/token/refresh/',
     [ApiPathNames.REGISTER]: '/register/',
     [ApiPathNames.PROFILE]: '/profile/',
+    [ApiPathNames.CLIENT_STATUSES]: '/client_statuses/',
+    [ApiPathNames.TRANSACTION_STATUSES]: '/transaction_statuses/',
+    [ApiPathNames.CLIENTS]: '/clients/',
 
     getPath(key: ApiPathNames) {
         return `${API_HOST}${this[key]}`

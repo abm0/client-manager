@@ -1,0 +1,53 @@
+[
+  {
+    "model": "client_manager.ClientStatus",
+    "pk": 1,
+    "fields": {
+      "name": "Активный"
+    }
+  },
+  {
+    "model": "client_manager.ClientStatus",
+    "pk": 2,
+    "fields": {
+      "name": "Неактивный"
+    }
+  },
+  {
+    "model": "client_manager.ClientStatus",
+    "pk": 3,
+    "fields": {
+      "name": "Потенциальный"
+    }
+  },
+  {
+    "model": "client_manager.TransactionStatus",
+    "pk": 1,
+    "fields": {
+      "name": "Переговоры"
+    }
+  },
+  {
+    "model": "client_manager.TransactionStatus",
+    "pk": 2,
+    "fields": {
+      "name": "Оплачено"
+    }
+  },
+  {
+    "model": "client_manager.TransactionStatus",
+    "pk": 3,
+    "fields": {
+      "name": "Отмена"
+    }
+  },
+  {
+    "model": "users.CustomUser",
+    "pk": 1,
+    "fields": {
+      "username": "myuser",
+      "email": "myuser@mail.ru",
+      "password": "12345678"
+    }
+  }
+]

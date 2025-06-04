@@ -18,6 +18,8 @@ api.interceptors.response.use(
   async error => {
     const originalRequest = error.config;
 
+    console.log(error.response?.status)
+
     // Если уже пробовали обновлять токен — не повторяем
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -29,7 +31,7 @@ api.interceptors.response.use(
         });
 
         const new_access_token = response.data.access;
-        localStorage.setItem('access_token', new_access_token);
+        localStorage.setItem(ACCESS_TOKEN_LS_KEY, new_access_token);
 
         // Повторяем оригинальный запрос с новым токеном
         originalRequest.headers.Authorization = `Bearer ${new_access_token}`;

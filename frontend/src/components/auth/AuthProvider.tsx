@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.removeItem(ACCESS_TOKEN_LS_KEY);
     localStorage.removeItem(REFRESH_TOKEN_LS_KEY);
 
-    queryClient.resetQueries();
+    queryClient.clear();
   };
 
   return (

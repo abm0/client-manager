@@ -15,7 +15,7 @@ import {
 import { BellIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { Navbar } from "./Navbar";
 import { AuthContext } from "./auth/AuthProvider";
-import { useLoadProfile } from "../queries/loadProfile.query";
+import { useLoadProfile } from "../queries/profile.query";
 
 interface IDrawerMenu {
   children: React.ReactNode;

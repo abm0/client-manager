@@ -12,7 +12,7 @@ export const useLoginMutation = (options?: UseMutationOptions<Credentials, Error
 
       return res.data;
     },
-    ...options
+    ...(options ?? {})
   })
 
 export const useRegisterMutation = (options?: UseMutationOptions<UserInfo, Error, UserInfo>) =>
@@ -22,5 +22,5 @@ export const useRegisterMutation = (options?: UseMutationOptions<UserInfo, Error
 
       return res.data;
     },
-    ...options,
+    ...(options ?? {}),
   })
