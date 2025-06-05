@@ -95,7 +95,7 @@ export const TransactionForm = ({ clientId, data, onSubmit }: TransactionFormPro
   
     })
   };
-  
+
   return (
     <Form<TransactionFormData> initialValues={data ? getInitialData(data) : undefined} onSubmit={handleFormSubmit}>
       {({ handleSubmit }) => (
@@ -131,7 +131,7 @@ export const TransactionForm = ({ clientId, data, onSubmit }: TransactionFormPro
               </Stack>
             )}
           </Field>
-          <Field name="status" validate={isRequired} initialValue={1}>
+          <Field name="status" validate={isRequired}>
             {({ meta, input }) => (
               <Stack spacing={2}>
                 <FormLabel>
@@ -140,6 +140,7 @@ export const TransactionForm = ({ clientId, data, onSubmit }: TransactionFormPro
                 <Select
                   name={input.name}
                   value={input.value}
+                  defaultValue={1}
                   onChange={input.onChange}
                   size="sm"
                   variant="filled"
@@ -148,7 +149,7 @@ export const TransactionForm = ({ clientId, data, onSubmit }: TransactionFormPro
                   isInvalid={meta.touched && meta.error}
                 >
                   {transactionStatuses?.map((s: {id: number, name: string}) => (
-                    <option key={s.id} value={s.id}>{s.name}</option>
+                    <option key={s.id} value={s.id.toString()}>{s.name}</option>
                   ))}
                 </Select>
               </Stack>

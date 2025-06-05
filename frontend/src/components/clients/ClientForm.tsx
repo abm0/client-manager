@@ -121,7 +121,7 @@ export const ClientForm = (props: ClientFormProps) => {
               </Stack>
             )}
           </Field>
-          <Field name="status" validate={isRequired} initialValue={1}>
+          <Field name="status" validate={isRequired}>
             {({ meta, input }) => (
               <Stack spacing={2}>
                 <FormLabel>
@@ -130,6 +130,7 @@ export const ClientForm = (props: ClientFormProps) => {
                 <Select
                   name={input.name}
                   value={input.value}
+                  defaultValue={1}
                   onChange={input.onChange}
                   size="sm"
                   variant="filled"
