@@ -24,5 +24,6 @@ class Note(models.Model):
 
 class Transaction(models.Model):
     value = models.IntegerField()
+    date = models.DateField(null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     status = models.ForeignKey(TransactionStatus, on_delete=models.CASCADE)

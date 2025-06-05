@@ -27,3 +27,10 @@ export type Note = {
   client_id: number;
   created_at: string;
 }
+
+export type Transaction = {
+  id: number;
+  value: number;
+  date: string;
+  status: number;
+}

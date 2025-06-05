@@ -34,7 +34,7 @@ const AddNoteForm = ({ clientId }: AddCommentFormProps) => {
     <VStack alignItems="stretch">
       <Textarea value={value} onChange={(e) => setValue(e.target.value)} />
       <HStack justifyContent="end">
-        <Button colorScheme="blue" size="sm" leftIcon={<AddIcon />} onClick={handleSubmit}>
+        <Button colorScheme="blue" size="sm" isLoading={addNoteMutation.status === 'pending'} leftIcon={<AddIcon />} onClick={handleSubmit}>
           Добавить заметку
         </Button>
       </HStack>

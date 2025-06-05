@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { loadNotes } from "../note";
+import { loadTransactions } from "../transactions";
 
-export const useLoadNotes = (clientId?: number) =>
+export const useLoadTransactions = (clientId?: number) =>
   useQuery({
-    queryKey: ['notes', clientId],
+    queryKey: ['transactions', clientId],
     queryFn: async () => {
       if (!clientId) {
         throw new Error("Client ID is required");
       }
 
-      const { data } = await loadNotes(clientId);
+      const { data } = await loadTransactions(clientId);
 
       return data;
     },

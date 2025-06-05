@@ -7,7 +7,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react'
-import { AddClientForm } from "./AddClientForm";
+import { ClientForm } from "./ClientForm";
 import { AddIcon } from "@chakra-ui/icons";
 
 export const AddClient = () => {
@@ -26,7 +26,7 @@ export const AddClient = () => {
           <ModalCloseButton />
           
           <ModalBody>
-            <AddClientForm onSubmit={onClose} />
+            <ClientForm onSubmit={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>

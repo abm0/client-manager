@@ -8,7 +8,7 @@ export type ClientData = {
   email: string;
   phone: string;
   company: string;
-  statusId: number;
+  status: number;
 };
 
 export const addClient = (data: ClientData) => api.post(apiPaths[ApiPathNames.CLIENTS], data);

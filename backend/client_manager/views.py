@@ -30,6 +30,11 @@ class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
     permission_classes = [IsAuthenticated]
+    
+    def perform_create(self, serializer):
+        client_id = self.kwargs['client_pk']
+        client = get_object_or_404(Client, id=client_id)
+        serializer.save(client=client)
 
 class ClientStatusViewSet(viewsets.ModelViewSet):
     queryset = ClientStatus.objects.all()

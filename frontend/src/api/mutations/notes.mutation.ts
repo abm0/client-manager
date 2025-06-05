@@ -1,7 +1,7 @@
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 import { addNote, deleteNote } from "../note";
 
-export type AddNoteParams = {
+type AddNoteParams = {
   content: string;
   clientId: number;
 };

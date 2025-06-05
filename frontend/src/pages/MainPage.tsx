@@ -1,6 +1,6 @@
 import { HStack, Heading, VStack } from "@chakra-ui/react"
-import { AddClient } from "../components/client/AddClient"
-import { ClientsList } from "../components/client/ClientsList"
+import { AddClient } from "../components/clients/AddClient"
+import { ClientsList } from "../components/clients/ClientsList"
 import { PageContainer } from "../components/utility/PageContainer"
 
 const MainPage = () => {

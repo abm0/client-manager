@@ -1,7 +1,7 @@
 import { Divider, Heading, HStack, VStack } from "@chakra-ui/react"
-import { TransactionsList } from "../components/TransactionsList";
+import { TransactionsList } from "../components/transactions/Transactions";
 import { NotesList } from "../components/Notes";
-import { RemoveClientButton } from "../components/client/RemoveClient";
+import { RemoveClientButton } from "../components/clients/RemoveClient";
 import { useLoadClient } from "../api/queries/clients.query";
 import { useParams } from "react-router-dom";
 import { PageContainer } from "../components/utility/PageContainer";
@@ -32,11 +32,11 @@ const ClientPage = () => {
             {clientData?.full_name}
           </Heading>
           <RemoveClientButton id={Number(client_id)} />
-        </HStack>      
+        </HStack>
 
         <Divider />
-  
-        <TransactionsList />
+
+        <TransactionsList clientId={Number(client_id)} />
       
         <NotesList clientId={Number(client_id)} />
       </VStack>
