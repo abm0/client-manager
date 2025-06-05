@@ -4,8 +4,8 @@ import { isRequired } from '../../shared/validators';
 import { useState } from 'react';
 import InputMask from 'react-input-mask';
 import { useToast } from '@chakra-ui/react';
-import { useLoadClientStatuses } from '../../api/queries/status.query';
-import { useAddClientMutation } from '../../api/mutations/client.mutation';
+import { useLoadClientStatuses } from '../../api/queries/statuses.query';
+import { useAddClientMutation } from '../../api/mutations/clients.mutation';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface IAddClientForm {

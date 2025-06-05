@@ -1,4 +1,4 @@
-export const API_HOST = 'http://127.0.0.1:8000';
+export const API_HOST = 'http://127.0.0.1:8000/';
 
 export enum ApiPathNames {
     TOKEN,
@@ -8,19 +8,21 @@ export enum ApiPathNames {
     CLIENT_STATUSES,
     TRANSACTION_STATUSES,
     CLIENTS,
+    NOTES,
 }
 
 /**
  * Список эндпоинтов на сервере
  */
 export const apiPaths = {
-    [ApiPathNames.TOKEN]: '/token/',
-    [ApiPathNames.REFRESH]: '/token/refresh/',
-    [ApiPathNames.REGISTER]: '/register/',
-    [ApiPathNames.PROFILE]: '/profile/',
-    [ApiPathNames.CLIENT_STATUSES]: '/client_statuses/',
-    [ApiPathNames.TRANSACTION_STATUSES]: '/transaction_statuses/',
-    [ApiPathNames.CLIENTS]: '/clients/',
+    [ApiPathNames.TOKEN]: 'token/',
+    [ApiPathNames.REFRESH]: 'token/refresh/',
+    [ApiPathNames.REGISTER]: 'register/',
+    [ApiPathNames.PROFILE]: 'profile/',
+    [ApiPathNames.CLIENT_STATUSES]: 'client_statuses/',
+    [ApiPathNames.TRANSACTION_STATUSES]: 'transaction_statuses/',
+    [ApiPathNames.CLIENTS]: 'clients/',
+    [ApiPathNames.NOTES]: 'notes/',
 
     getPath(key: ApiPathNames) {
         return `${API_HOST}${this[key]}`
@@ -30,7 +32,7 @@ export const apiPaths = {
 /**
  * Ключи для хранения токенов в local storage
  */
-export const ACCESS_TOKEN_LS_KEY = 'audio-utils-app-access-token';
-export const REFRESH_TOKEN_LS_KEY = 'audio-utils-app-refresh-token';
+export const ACCESS_TOKEN_LS_KEY = 'client-manager-app-access-token';
+export const REFRESH_TOKEN_LS_KEY = 'client-manager-app-refresh-token';
  
 

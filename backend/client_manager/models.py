@@ -20,6 +20,7 @@ class Client(models.Model):
 class Note(models.Model):
     content = models.CharField(max_length=255)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
 class Transaction(models.Model):
     value = models.IntegerField()

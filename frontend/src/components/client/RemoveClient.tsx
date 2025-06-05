@@ -1,7 +1,7 @@
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Button, HStack, Text, VStack } from '@chakra-ui/react'
 import { IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from "@chakra-ui/react";
-import { useDeleteClientMutation } from "../../api/mutations/client.mutation";
+import { useDeleteClientMutation } from "../../api/mutations/clients.mutation";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 

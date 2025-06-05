@@ -13,18 +13,18 @@ export const useLoadClients = () =>
     retry: false,
   });
 
-export const useLoadClient = (id?: number) =>
+export const useLoadClient = (clientId?: number) =>
   useQuery<Client>({
-    queryKey: ['client', id],
+    queryKey: ['client', clientId],
     queryFn: async () => {
-      if (!id) {
+      if (!clientId) {
         throw new Error("Client ID is required");
       }
 
-      const { data } = await loadClient(id);
+      const { data } = await loadClient(clientId);
 
       return data;
     },
     retry: false,
-    enabled: !!id,
+    enabled: !!clientId,
   });

@@ -3,7 +3,7 @@ import { ACCESS_TOKEN_LS_KEY, API_HOST, ApiPathNames, apiPaths, REFRESH_TOKEN_LS
 import { AUTH_PATH } from '../shared/paths';
 
 const api = axios.create({
-  baseURL: `${API_HOST}/api`,
+  baseURL: `${API_HOST}api`,
 });
 
 api.interceptors.request.use((config) => {
@@ -18,15 +18,13 @@ api.interceptors.response.use(
   async error => {
     const originalRequest = error.config;
 
-    console.log(error.response?.status)
-
     // Если уже пробовали обновлять токен — не повторяем
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const refresh_token = localStorage.getItem(REFRESH_TOKEN_LS_KEY);
 
-        const response = await axios.post(`${API_HOST}/api${apiPaths[ApiPathNames.REFRESH]}`, {
+        const response = await axios.post(`${API_HOST}api${apiPaths[ApiPathNames.REFRESH]}`, {
           refresh: refresh_token,
         });
 

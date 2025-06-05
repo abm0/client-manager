@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from .models import Client, Note, Transaction, ClientStatus, TransactionStatus
 from .serializers import *
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
@@ -15,6 +16,15 @@ class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
     permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        client_id = self.kwargs['client_pk']
+        return Note.objects.filter(client_id=client_id)
+
+    def perform_create(self, serializer):
+        client_id = self.kwargs['client_pk']
+        client = get_object_or_404(Client, id=client_id)
+        serializer.save(client=client)
 
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()

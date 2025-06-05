@@ -6,7 +6,7 @@ export type Credentials = {
   password: string;
 }
 
-export const login = (credentials: Credentials) => api.post(apiPaths[ApiPathNames.TOKEN], credentials)
+export const login = (data: Credentials) => api.post(apiPaths[ApiPathNames.TOKEN], data)
 
 export type UserInfo = {
   email: string;
@@ -14,4 +14,4 @@ export type UserInfo = {
   username: string;
 }
 
-export const register = (userInfo: UserInfo) => api.post(apiPaths[ApiPathNames.REGISTER], userInfo)
+export const register = (data: UserInfo) => api.post(apiPaths[ApiPathNames.REGISTER], data)

@@ -24,7 +24,7 @@ class ClientSerializer(serializers.ModelSerializer):
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
-        fields = '__all__'
+        fields = ['id', 'content', 'created_at']
 
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:

@@ -20,3 +20,10 @@ export type Client = {
   status: number;
   user: number;
 }
+
+export type Note = {
+  content: string;
+  id: number;
+  client_id: number;
+  created_at: string;
+}

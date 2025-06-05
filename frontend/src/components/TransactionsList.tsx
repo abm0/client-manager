@@ -1,6 +1,5 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { Box, HStack, IconButton, Spacer, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
-import React from 'react';
 
 const transactions = [{
   date: '10.05.2025',
@@ -35,7 +34,7 @@ export const TransactionsList = (props: TransactionsListProps) => (
         </Tr>
       </Thead>
       <Tbody>
-        {transactions.map((transaction, index) => (
+        {transactions.map((transaction) => (
             <Tr>
               <Td>
                 {transaction.date}

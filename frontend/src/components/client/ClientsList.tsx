@@ -5,8 +5,8 @@ import { EngagementStatus } from "../EngagementStatus";
 import { useNavigate } from "react-router-dom";
 import { CLIENT_PATH } from "../../shared/paths";
 import { ClientSearch } from "./ClientSearch";
-import { useLoadClients } from "../../api/queries/client.query";
-import { useLoadClientStatuses } from "../../api/queries/status.query";
+import { useLoadClients } from "../../api/queries/clients.query";
+import { useLoadClientStatuses } from "../../api/queries/statuses.query";
 import { Client, type ClientStatus as ClientStatusType } from "../../models/types";
 import { useState } from "react";
 
@@ -58,7 +58,7 @@ const ClientsList = () => {
   }
 
   const filteredClients = clients.filter((client: Client) => {
-    const status = clientStatuses.find((s: ClientStatusType) => s.id === client.status)?.name;
+    const status = clientStatuses?.find((s: ClientStatusType) => s.id === client.status)?.name;
 
     let isFilteredStatus = false
     if (tabIndex === 0) {
@@ -77,7 +77,7 @@ const ClientsList = () => {
   });
 
   const listElements = filteredClients.map((client: Client) => {
-    const status = clientStatuses.find((s: ClientStatusType) => s.id === client.status)?.name
+    const status = clientStatuses?.find((s: ClientStatusType) => s.id === client.status)?.name
 
     return (
       <Card key={client.id} style={{ width: '100%' }} onClick={() => navigate(CLIENT_PATH.replace(':client_id', client.id.toString()))}>

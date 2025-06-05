@@ -11,7 +11,7 @@ export type ClientData = {
   statusId: number;
 };
 
-export const addClient = (clientData: ClientData) => api.post(apiPaths[ApiPathNames.CLIENTS], clientData);
+export const addClient = (data: ClientData) => api.post(apiPaths[ApiPathNames.CLIENTS], data);
 
 export const loadClients = () => api.get(apiPaths[ApiPathNames.CLIENTS]);
 

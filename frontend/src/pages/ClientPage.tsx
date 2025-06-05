@@ -1,8 +1,8 @@
 import { Divider, Heading, HStack, VStack } from "@chakra-ui/react"
 import { TransactionsList } from "../components/TransactionsList";
-import { Comments } from "../components/Comments";
+import { NotesList } from "../components/Notes";
 import { RemoveClientButton } from "../components/client/RemoveClient";
-import { useLoadClient } from "../api/queries/client.query";
+import { useLoadClient } from "../api/queries/clients.query";
 import { useParams } from "react-router-dom";
 import { PageContainer } from "../components/utility/PageContainer";
 
@@ -38,7 +38,7 @@ const ClientPage = () => {
   
         <TransactionsList />
       
-        <Comments />
+        <NotesList clientId={Number(client_id)} />
       </VStack>
     </PageContainer>
   )
