@@ -2,32 +2,74 @@ import { Button, FormLabel, Input, InputGroup, InputLeftElement, Select, Stack, 
 import { Field, Form } from "react-final-form";
 import { isRequired } from "../../shared/validators";
 import { useLoadTransactionStatuses } from "../../api/queries/statuses.query";
-import { useAddTransactionMutation } from "../../api/mutations/transactions.mutation";
+import { useAddTransactionMutation, useEditTransactionMutation } from "../../api/mutations/transactions.mutation";
 import { useQueryClient } from "@tanstack/react-query";
+import { Transaction } from "../../models/types";
 
 type TransactionFormProps = {
   clientId: number;
+  data?: Transaction;
   onSubmit: () => void;
 };
 
 type TransactionFormData = {
   date: string;
-  sum: string;
+  value: string;
   status: number;
 };
 
-export const TransactionForm = ({ clientId, onSubmit }: TransactionFormProps) => {
+const getInitialData = (data: Transaction): TransactionFormData => {
+  return {
+    date: data.date,
+    value: String(data.value),
+    status: data.status,
+  };
+};
+
+export const TransactionForm = ({ clientId, data, onSubmit }: TransactionFormProps) => {
   const toast = useToast();
   const queryClient = useQueryClient();
 
   const { data: transactionStatuses } = useLoadTransactionStatuses();
 
   const addTransactionMutation = useAddTransactionMutation();
+  const editTransactionMutation = useEditTransactionMutation();
 
   const handleFormSubmit = (values: TransactionFormData) => {
+    if (data) {
+      editTransactionMutation.mutate({
+        date: values.date,
+        value: Number(values.value),
+        status: Number(values.status),
+        clientId,
+        transactionId: data.id,
+      }, {
+        onSuccess: () => {
+          toast({
+            title: 'Успех!',
+            description: 'Транзакция изменена',
+            status: 'success',
+            isClosable: true,
+          })
+
+          queryClient.invalidateQueries({ queryKey: ['transactions'] });
+          onSubmit();
+        },
+        onError: () => {
+          toast({
+            title: 'Что то пошло не так',
+            description: 'Произошла ошибка при изменении транзакции',
+            status: 'error',
+            isClosable: true,
+          });
+        },
+      });
+      return;
+    }
+    
     addTransactionMutation.mutate({
       date: values.date,
-      value: Number(values.sum),
+      value: Number(values.value),
       status: Number(values.status),
       clientId,
     }, {
@@ -55,7 +97,7 @@ export const TransactionForm = ({ clientId, onSubmit }: TransactionFormProps) =>
   };
   
   return (
-    <Form<TransactionFormData> onSubmit={handleFormSubmit}>
+    <Form<TransactionFormData> initialValues={data ? getInitialData(data) : undefined} onSubmit={handleFormSubmit}>
       {({ handleSubmit }) => (
         <Stack spacing={4}>
           <Field name="date" validate={isRequired}>
@@ -74,7 +116,7 @@ export const TransactionForm = ({ clientId, onSubmit }: TransactionFormProps) =>
               </Stack>
             )}
           </Field>
-          <Field name="sum" validate={isRequired}>
+          <Field name="value" validate={isRequired}>
             {({ meta, input }) => (
               <Stack spacing={2}>
                 <FormLabel>
@@ -114,7 +156,7 @@ export const TransactionForm = ({ clientId, onSubmit }: TransactionFormProps) =>
           </Field>
 
           <Button loadingText="Загрузка..." isLoading={addTransactionMutation.status === 'pending'} colorScheme='blue' mr={3} size="sm" onClick={handleSubmit}>
-            Добавить
+            {data ? 'Изменить' : 'Добавить'}
           </Button>
         </Stack>
       )}

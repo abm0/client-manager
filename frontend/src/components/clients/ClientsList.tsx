@@ -47,10 +47,10 @@ const ClientsList = () => {
   
   const emptyContent = (
     <Center>
-        <Text>
-          Клиенты не найдены
-        </Text>
-      </Center>
+      <Text>
+        Клиенты не найдены
+      </Text>
+    </Center>
   );
   
   if (isEmpty(clients)) {

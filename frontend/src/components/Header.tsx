@@ -65,7 +65,7 @@ const Header = () => {
 
       {isAuthenticated && (
         <HStack>
-          <IconButton size="sm" aria-label='foo'>
+          <IconButton size="sm" aria-label='notification'>
             <BellIcon />
           </IconButton> 
           <DrawerMenu>

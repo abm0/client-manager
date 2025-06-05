@@ -24,7 +24,7 @@ api.interceptors.response.use(
       try {
         const refresh_token = localStorage.getItem(REFRESH_TOKEN_LS_KEY);
 
-        const response = await axios.post(`${API_HOST}api${apiPaths[ApiPathNames.REFRESH]}`, {
+        const response = await axios.post(`${API_HOST}api/${apiPaths[ApiPathNames.REFRESH]}`, {
           refresh: refresh_token,
         });
 

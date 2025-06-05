@@ -19,6 +19,7 @@ export type Client = {
   phone: string;
   status: number;
   user: number;
+  sum: number;
 }
 
 export type Note = {
