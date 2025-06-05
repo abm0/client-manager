@@ -7,17 +7,6 @@ import { AddTransaction } from './AddTransaction';
 import { TransactionForm } from './TransactionForm';
 import { useState } from 'react';
 
-// const transactions = [{
-//   date: '10.05.2025',
-//   sum: 10000,
-//   status: 'Переговоры',
-// },
-// {
-//   date: '13.05.2025',
-//   sum: 5000,
-//   status: 'Оплачено'
-// }]
-
 type TransactionsListProps = {
   clientId: number;
 };
@@ -27,6 +16,7 @@ export const TransactionsList = ({ clientId }: TransactionsListProps) => {
   
   const { data: transactions } = useLoadTransactions(clientId);
   const { data: transactionStatuses } = useLoadTransactionStatuses();
+
 
   return (
     <Box>
@@ -62,7 +52,7 @@ export const TransactionsList = ({ clientId }: TransactionsListProps) => {
                 <Td>
                   <IconButton size="sm" aria-label='edit' onClick={() => setEditedTransaction(transaction)}>
                     <EditIcon />
-                  </IconButton> 
+                  </IconButton>
                 </Td>
               </Tr>
             );

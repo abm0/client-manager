@@ -1,10 +1,11 @@
-import { Button, FormLabel, Input, InputGroup, InputLeftElement, Select, Stack, useToast } from "@chakra-ui/react";
+import { Button, FormLabel, HStack, IconButton, Input, InputGroup, InputLeftElement, Select, Stack, useToast } from "@chakra-ui/react";
 import { Field, Form } from "react-final-form";
 import { isRequired } from "../../shared/validators";
 import { useLoadTransactionStatuses } from "../../api/queries/statuses.query";
-import { useAddTransactionMutation, useEditTransactionMutation } from "../../api/mutations/transactions.mutation";
+import { useAddTransactionMutation, useDeleteTransactionMutation, useEditTransactionMutation } from "../../api/mutations/transactions.mutation";
 import { useQueryClient } from "@tanstack/react-query";
 import { Transaction } from "../../models/types";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 type TransactionFormProps = {
   clientId: number;
@@ -31,9 +32,19 @@ export const TransactionForm = ({ clientId, data, onSubmit }: TransactionFormPro
   const queryClient = useQueryClient();
 
   const { data: transactionStatuses } = useLoadTransactionStatuses();
-
+  
   const addTransactionMutation = useAddTransactionMutation();
   const editTransactionMutation = useEditTransactionMutation();
+  const deleteTransactionMutation = useDeleteTransactionMutation();
+  
+  const handleDelete = (transactionId: number) => {
+    deleteTransactionMutation.mutate({ clientId, transactionId }, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['transactions'] });
+        onSubmit();
+      },
+    })
+  }
 
   const handleFormSubmit = (values: TransactionFormData) => {
     if (data) {
@@ -156,9 +167,16 @@ export const TransactionForm = ({ clientId, data, onSubmit }: TransactionFormPro
             )}
           </Field>
 
-          <Button loadingText="Загрузка..." isLoading={addTransactionMutation.status === 'pending'} colorScheme='blue' mr={3} size="sm" onClick={handleSubmit}>
-            {data ? 'Изменить' : 'Добавить'}
-          </Button>
+          <HStack spacing={2} justifyContent={'space-between'} width="100%">
+            {data && (
+              <IconButton size="sm" color="red" aria-label='delete' onClick={() => handleDelete(data.id)}>
+                <DeleteIcon />
+              </IconButton> 
+            )}
+            <Button loadingText="Загрузка..." isLoading={addTransactionMutation.status === 'pending'} colorScheme='blue' mr={3} size="sm" onClick={handleSubmit}>
+              {data ? 'Изменить' : 'Добавить'}
+            </Button>            
+          </HStack>
         </Stack>
       )}
     </Form>
