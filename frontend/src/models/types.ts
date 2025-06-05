@@ -20,6 +20,7 @@ export type Client = {
   status: number;
   user: number;
   sum: number;
+  engagement: number;
 }
 
 export type Note = {

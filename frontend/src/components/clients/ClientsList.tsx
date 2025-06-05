@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Center, HStack, Heading, Spacer, Stack, StackDivider, Tab, TabList, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Card, CardBody, CardHeader, Center, HStack, Heading, Stack, StackDivider, Tab, TabList, Tabs, Text, VStack } from "@chakra-ui/react";
 import { isEmpty } from "lodash";
 import { ClientStatus } from "./ClientStatus";
 import { EngagementStatus } from "../EngagementStatus";
@@ -9,30 +9,6 @@ import { useLoadClients } from "../../api/queries/clients.query";
 import { useLoadClientStatuses } from "../../api/queries/statuses.query";
 import { Client, type ClientStatus as ClientStatusType } from "../../models/types";
 import { useState } from "react";
-
-// const client1 = {
-//   id: 1,
-//   name: 'Николаев Максим Дмитриевич',
-//   email: 'example@mail.ru',
-//   phone: '+7 999 176 82 32',
-//   status: 'rejected' as const,
-//   company: 'ИнтерСевер',
-//   sum: 15000,
-//   engagement: 'low' as const,
-// };
-
-// const client2 = {
-//   id: 2,
-//   name: 'Меркулов Ян Матвеевич',
-//   email: 'another.example@mail.ru',
-//   phone: '+7 992 518 14 14',
-//   status: 'active' as const,
-//   company: 'Деловые Линии',
-//   sum: 10000,
-//   engagement: 'high' as const,
-// };
-
-// const clients = [client1, client2];
 
 const tabs = ['Активные', 'Потенциальные', 'Отказ']
 
@@ -87,7 +63,7 @@ const ClientsList = () => {
               <Heading size="md">{client.full_name}</Heading>
               <HStack>
                 <Text size="xs">Вовлечённость:</Text>
-                {/* <EngagementStatus status={client.engagement} /> */}
+                <EngagementStatus value={client.engagement} />
               </HStack>
 
               <HStack>

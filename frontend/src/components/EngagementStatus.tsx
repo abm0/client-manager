@@ -1,23 +1,37 @@
 import { Text } from '@chakra-ui/react';
 
 const statusColorMap = {
-  high: '#32CD32',
-  low: '#B22222',
-}
+  high: '#fa7a1e',
+  medium: '#fad51e',
+  low: '#969696',
+} as const;
 
 const statusLabelMap = {
-  high: 'Высокая',
-  low: 'Низкая',
-}
+  high: 'Горячий',
+  medium: 'Тёплый',
+  low: 'Холодный',
+} as const;
 
 type EngagementStatusProps = {
-  status: 'high' | 'low';
+  value: number;
 }
 
-export function EngagementStatus(props: EngagementStatusProps) {
+const getEngagementStatus = (value: number): keyof typeof statusColorMap => {
+  if (value >= 6) {
+    return 'high';
+  } else if (value >= 2) {
+    return 'medium';
+  } else {
+    return 'low';
+  }
+}
+
+export function EngagementStatus({ value }: EngagementStatusProps) {
+
+  
   return (
-    <Text fontSize='sm' fontWeight="bold" color={statusColorMap[props.status]}>
-      {statusLabelMap[props.status]}
+    <Text fontSize='sm' fontWeight="bold" color={statusColorMap[getEngagementStatus(value)]}>
+      {statusLabelMap[getEngagementStatus(value)]}
     </Text> 
   )
 }
