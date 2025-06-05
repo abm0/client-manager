@@ -82,6 +82,9 @@ export const NotesList = ({ clientId }: NotesListProps) => {
       <Text fontWeight={"bold"}>Заметки:</Text>
       <Spacer height={2} />
       <VStack gap={2} alignItems="stretch">
+        {notes?.length === 0 && (
+          <Text>Нет заметок о клиенте</Text>
+        )}
         {notes?.map((note: Note) => (
           <VStack key={note.id} gap={2} alignItems="stretch">
             <Text>

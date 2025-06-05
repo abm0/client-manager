@@ -11,9 +11,8 @@ router.register(r'clients', ClientViewSet)
 clients_router = routers.NestedDefaultRouter(router, r'clients', lookup='client')
 clients_router.register(r'notes', NoteViewSet, basename='client-notes')
 clients_router.register(r'transactions', TransactionViewSet, basename='client-transactions')
+clients_router.register(r'interactions', InteractionViewSet, basename='client-interactions')
 
-# router.register(r'notes', NoteViewSet)
-# router.register(r'transactions', TransactionViewSet, basename='client-transactions')
 router.register(r'client_statuses', ClientStatusViewSet)
 router.register(r'transaction_statuses', TransactionStatusViewSet)
 

@@ -1,20 +1,20 @@
 import { AddIcon } from "@chakra-ui/icons";
 import { IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from "@chakra-ui/react";
 import { useState } from "react";
-import { TransactionForm } from "./TransactionForm";
+import { InteractionForm } from "./InteractionForm";
 
-type AddTransactionProps = {
+type AddInteractionProps = {
   clientId: number;
 }
 
-export const EditTransaction = ({ clientId }: AddTransactionProps) => {
+export const AddInteraction = ({ clientId }: AddInteractionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <IconButton
         size="sm"
-        aria-label="add-transaction"
+        aria-label="add-interaction"
         colorScheme="blue"
         onClick={() => setIsOpen(true)}
       >
@@ -23,11 +23,11 @@ export const EditTransaction = ({ clientId }: AddTransactionProps) => {
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ModalOverlay />
         <ModalContent paddingBottom={4}>
-          <ModalHeader>Добавление транзакции</ModalHeader>
+          <ModalHeader>Добавление контакта</ModalHeader>
           <ModalCloseButton />
           
           <ModalBody>
-            <TransactionForm clientId={clientId} onSubmit={() => setIsOpen(false)} />
+            <InteractionForm clientId={clientId} onSubmit={() => setIsOpen(false)} />
           </ModalBody>
         </ModalContent>
       </Modal>

@@ -22,8 +22,25 @@ class Note(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
+    class Meta:
+        verbose_name_plural = "Notes"
+        ordering = ['-created_at']
+
 class Transaction(models.Model):
     value = models.IntegerField()
     date = models.DateField(null=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     status = models.ForeignKey(TransactionStatus, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = "Transactions"
+        ordering = ['-date']
+
+class Interaction(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True, null=True)
+    content = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name_plural = "Interactions"
+        ordering = ['-date']

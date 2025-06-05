@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .models import Client, Note, Transaction, ClientStatus, TransactionStatus
+from .models import Client, Interaction, Note, Transaction, ClientStatus, TransactionStatus
 from .serializers import *
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
@@ -31,6 +31,24 @@ class TransactionViewSet(viewsets.ModelViewSet):
     serializer_class = TransactionSerializer
     permission_classes = [IsAuthenticated]
     
+    def get_queryset(self):
+        client_id = self.kwargs['client_pk']
+        return Transaction.objects.filter(client_id=client_id)
+    
+    def perform_create(self, serializer):
+        client_id = self.kwargs['client_pk']
+        client = get_object_or_404(Client, id=client_id)
+        serializer.save(client=client)
+
+class InteractionViewSet(viewsets.ModelViewSet):
+    queryset = Interaction.objects.all()
+    serializer_class = InteractionSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        client_id = self.kwargs['client_pk']
+        return Interaction.objects.filter(client_id=client_id)
+
     def perform_create(self, serializer):
         client_id = self.kwargs['client_pk']
         client = get_object_or_404(Client, id=client_id)

@@ -35,3 +35,9 @@ export type Transaction = {
   date: string;
   status: number;
 }
+
+export type Interaction = {
+  id: number;
+  content: string;
+  date: string;
+}

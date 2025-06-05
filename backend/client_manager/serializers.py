@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Client, Note, Transaction, ClientStatus, TransactionStatus
+from .models import Client, Interaction, Note, Transaction, ClientStatus, TransactionStatus
 from django.db.models import Sum
 
 class ClientStatusSerializer(serializers.ModelSerializer):
@@ -33,6 +33,12 @@ class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = ['id', 'content', 'created_at']
+
+class InteractionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Interaction
+        fields = ['id', 'content', 'date']
+        read_only_fields = ['date']
 
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
