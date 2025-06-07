@@ -142,7 +142,7 @@ export const TransactionForm = ({ clientId, data, onSubmit }: TransactionFormPro
               </Stack>
             )}
           </Field>
-          <Field name="status" validate={isRequired}>
+          <Field name="status" validate={isRequired} initialValue={data ? data.status : "1"}>
             {({ meta, input }) => (
               <Stack spacing={2}>
                 <FormLabel>
@@ -151,7 +151,6 @@ export const TransactionForm = ({ clientId, data, onSubmit }: TransactionFormPro
                 <Select
                   name={input.name}
                   value={input.value}
-                  defaultValue={1}
                   onChange={input.onChange}
                   size="sm"
                   variant="filled"

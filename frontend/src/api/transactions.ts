@@ -15,3 +15,5 @@ export const editTransaction = (data: TransactionData, clientId: number, transac
 export const loadTransactions = (clientId: number) => api.get(`${apiPaths[ApiPathNames.CLIENTS]}${clientId}/${apiPaths[ApiPathNames.TRANSACTIONS]}`);
 
 export const deleteTransaction = (clientId: number, transactionId: number) => api.delete(`${apiPaths[ApiPathNames.CLIENTS]}${clientId}/${apiPaths[ApiPathNames.TRANSACTIONS]}${transactionId}/`);
+
+export const loadWeeklyTransactions = (clientId: number) => api.get(`${apiPaths[ApiPathNames.CLIENTS]}${clientId}/${apiPaths[ApiPathNames.WEEKLY_TRANSACTIONS]}`);

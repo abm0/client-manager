@@ -6,17 +6,7 @@ import { useLoadClient } from "../api/queries/clients.query";
 import { useParams } from "react-router-dom";
 import { PageContainer } from "../components/utility/PageContainer";
 import { InteractoinsList } from "../components/interactions/Interactions";
-
-// const client1 = {
-//   id: 1,
-//   name: 'Николаев Максим Дмитриевич',
-//   email: 'example@mail.ru',
-//   phone: '+7 999 176 82 32',
-//   status: 'rejected' as const,
-//   company: 'ИнтерСевер',
-//   sum: 15000,
-//   engagement: 'low' as const,
-// };
+import { WeeklyTransactions } from "../components/transactions/WeeklyTransactions";
 
 const ClientPage = () => {
   const { client_id } = useParams<{ client_id: string }>();
@@ -37,6 +27,8 @@ const ClientPage = () => {
           </HStack>
           <Text color="gray.500" fontWeight="bold" fontSize={16}>{clientData?.company}</Text>
         </VStack>
+
+        <WeeklyTransactions clientId={Number(client_id)} />
 
         <Divider />
 

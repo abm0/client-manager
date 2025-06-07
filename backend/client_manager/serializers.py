@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Client, Interaction, Note, Transaction, ClientStatus, TransactionStatus
+from .models import Client, Interaction, Note, Transaction, TransactionStatus
 from django.db.models import Sum
 from datetime import timedelta
 from django.utils import timezone
@@ -7,11 +7,6 @@ from dateutil.relativedelta import relativedelta
 
 now = timezone.now().replace(tzinfo=None)  # Текущая дата и время
 thirty_days_ago = now - timedelta(days=30)
-
-class ClientStatusSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ClientStatus
-        fields = '__all__'
 
 class TransactionStatusSerializer(serializers.ModelSerializer):
     class Meta:
@@ -85,3 +80,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = ['id', 'value', 'status', 'date']
+        
+class WeeklyTransactionSerializer(serializers.Serializer):
+    week = serializers.DateField()
+    total = serializers.DecimalField(max_digits=10, decimal_places=2)

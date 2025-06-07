@@ -1,8 +1,12 @@
 from rest_framework import viewsets
-from .models import Client, Interaction, Note, Transaction, ClientStatus, TransactionStatus
+from .models import Client, Interaction, Note, Transaction, TransactionStatus
 from .serializers import *
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
+from datetime import date, timedelta
+from django.db.models.functions import TruncWeek
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
@@ -54,12 +58,42 @@ class InteractionViewSet(viewsets.ModelViewSet):
         client = get_object_or_404(Client, id=client_id)
         serializer.save(client=client)
 
-class ClientStatusViewSet(viewsets.ModelViewSet):
-    queryset = ClientStatus.objects.all()
-    serializer_class = ClientStatusSerializer
-    permission_classes = [IsAuthenticated]
-
 class TransactionStatusViewSet(viewsets.ModelViewSet):
     queryset = TransactionStatus.objects.all()
     serializer_class = TransactionStatusSerializer
     permission_classes = [IsAuthenticated]
+
+
+class WeeklyTransactionView(viewsets.ViewSet):
+    def list(self, request, client_pk=None):
+        today = date.today()
+        start_date = today - timedelta(days=30)
+
+        # Получаем список недель от start_date до today
+        current = start_date - timedelta(days=start_date.weekday())  # до понедельника
+        weeks = []
+        while current <= today:
+            weeks.append(current)
+            current += timedelta(weeks=1)
+
+        # Данные из БД
+        db_data = (
+            Transaction.objects
+            .filter(client_id=client_pk, date__gte=start_date, date__lte=today, status=2)
+            .annotate(week=TruncWeek('date'))
+            .values('week')
+            .annotate(total=Sum('value'))
+        )
+
+        # Преобразуем в словарь для быстрого доступа
+        totals_by_week = {entry['week']: entry['total'] for entry in db_data}
+
+        # Заполняем пропущенные недели нулями
+        result = []
+        for week in weeks:
+            result.append({
+                'week': week,
+                'total': totals_by_week.get(week, 0)
+            })
+
+        return Response(result)

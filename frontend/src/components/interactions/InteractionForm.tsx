@@ -1,4 +1,4 @@
-import { Button, FormLabel, Input, Stack, Textarea, useToast } from "@chakra-ui/react";
+import { Button, FormLabel, Stack, Textarea, useToast } from "@chakra-ui/react";
 import { Field, Form } from "react-final-form";
 import { isRequired } from "../../shared/validators";
 import { useQueryClient } from "@tanstack/react-query";
@@ -93,22 +93,6 @@ export const InteractionForm = ({ clientId, data, onSubmit }: InteractionFormPro
     <Form<InteractionFormData> initialValues={data ? getInitialData(data) : undefined} onSubmit={handleFormSubmit}>
       {({ handleSubmit }) => (
         <Stack spacing={4}>
-          <Field name="date" validate={isRequired}>
-            {({ meta, input }) => (
-              <Stack spacing={2}>
-                <FormLabel>
-                  Дата:
-                </FormLabel>
-                <Input
-                  type="date"
-                  name={input.name}
-                  value={input.value}
-                  isInvalid={meta.touched && meta.error}
-                  onChange={input.onChange}
-                />
-              </Stack>
-            )}
-          </Field>
           <Field name="content" validate={isRequired}>
             {({ meta, input }) => (
               <Stack spacing={2}>

@@ -1,9 +1,8 @@
-import { Button, FormLabel, Input, Select, Stack } from '@chakra-ui/react';
+import { Button, FormLabel, Input, Stack } from '@chakra-ui/react';
 import { Field, Form } from 'react-final-form';
 import { isRequired } from '../../shared/validators';
 import InputMask from 'react-input-mask';
 import { useToast } from '@chakra-ui/react';
-import { useLoadClientStatuses } from '../../api/queries/statuses.query';
 import { useAddClientMutation } from '../../api/mutations/clients.mutation';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -23,8 +22,6 @@ export type ClientFormData = {
 
 export const ClientForm = (props: ClientFormProps) => {
   const toast = useToast()
-
-  const { data: clientStatuses } = useLoadClientStatuses();
 
   const clientMutation = useAddClientMutation();
 
@@ -121,31 +118,6 @@ export const ClientForm = (props: ClientFormProps) => {
               </Stack>
             )}
           </Field>
-          <Field name="status" validate={isRequired}>
-            {({ meta, input }) => (
-              <Stack spacing={2}>
-                <FormLabel>
-                  Статус:
-                </FormLabel>
-                <Select
-                  name={input.name}
-                  value={input.value}
-                  defaultValue={1}
-                  onChange={input.onChange}
-                  size="sm"
-                  variant="filled"
-                  colorScheme="white"
-                  width="auto"
-                  isInvalid={meta.touched && meta.error}
-                >
-                  {clientStatuses?.map((s: {id: number, name: string}) => (
-                    <option key={s.id} value={s.id}>{s.name}</option>
-                  ))}
-                </Select>
-              </Stack>
-            )}
-          </Field>
-
           <Button loadingText="Загрузка..." isLoading={clientMutation.status === 'pending'} colorScheme='blue' mr={3} size="sm" onClick={handleSubmit}>
             Добавить
           </Button>

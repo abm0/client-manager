@@ -6,6 +6,7 @@ import { useLoadTransactionStatuses } from '../../api/queries/statuses.query';
 import { AddTransaction } from './AddTransaction';
 import { TransactionForm } from './TransactionForm';
 import { useState } from 'react';
+import { format } from 'date-fns';
 
 type TransactionsListProps = {
   clientId: number;
@@ -41,7 +42,7 @@ export const TransactionsList = ({ clientId }: TransactionsListProps) => {
             return (
               <Tr>
                 <Td>
-                  {transaction.date}
+                  {format(new Date(transaction.date), 'dd-MM-yyyy')}
                 </Td>
                 <Td>
                   {transaction.value} руб.

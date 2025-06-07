@@ -1,4 +1,5 @@
 import { Text } from '@chakra-ui/react';
+import { getEngagementStatus } from '../utils';
 
 const statusColorMap = {
   high: '#fa7a1e',
@@ -16,15 +17,7 @@ type EngagementStatusProps = {
   value: number;
 }
 
-const getEngagementStatus = (value: number): keyof typeof statusColorMap => {
-  if (value >= 6) {
-    return 'high';
-  } else if (value >= 2) {
-    return 'medium';
-  } else {
-    return 'low';
-  }
-}
+
 
 export function EngagementStatus({ value }: EngagementStatusProps) {
 

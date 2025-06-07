@@ -41,6 +41,7 @@ export const RemoveClientButton = (props: RemoveClientProps) => {
                     onSuccess: () => {
                       setIsOpen(false);
                       queryClient.invalidateQueries({ queryKey: ['clients'] });
+                      window.location.pathname = '/';
                     }
                   });
                 }}>
