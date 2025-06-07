@@ -12,6 +12,8 @@ export enum ApiPathNames {
     TRANSACTIONS,
     INTERACTIONS,
     WEEKLY_TRANSACTIONS,
+    EXPORT_CLIENTS,
+    EXPORT_TRANSACTIONS,
 }
 
 /**
@@ -29,6 +31,8 @@ export const apiPaths = {
     [ApiPathNames.TRANSACTIONS]: 'transactions/',
     [ApiPathNames.INTERACTIONS]: 'interactions/',
     [ApiPathNames.WEEKLY_TRANSACTIONS]: 'weekly_transactions/',
+    [ApiPathNames.EXPORT_CLIENTS]: 'export/clients/',
+    [ApiPathNames.EXPORT_TRANSACTIONS]: 'export/transactions/',
 
     getPath(key: ApiPathNames) {
         return `${API_HOST}${this[key]}`

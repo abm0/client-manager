@@ -21,5 +21,7 @@ urlpatterns = [
     path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/', RegisterView.as_view(), name='register'),
-    path('profile/', ProfileView.as_view(), name='profile')
+    path('profile/', ProfileView.as_view(), name='profile'),
+    path('export/clients/', ExportClientsCSV.as_view(), name='export_clients'),
+    path('export/transactions/', ExportTransactionsCSV.as_view(), name='export_transactions'),
 ]

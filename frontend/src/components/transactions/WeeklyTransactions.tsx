@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import { format } from "date-fns";
 import { ru } from 'date-fns/locale';
+import { isEmpty } from "lodash";
 
 // Регистрируем нужные модули
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
@@ -70,7 +71,7 @@ export const WeeklyTransactions = ({ clientId }: WeeklyTransactionsProps) => {
   
   return (
     <div>
-      <Button variant="link" color="blue" onClick={() => setIsOpen(true)}>График продаж</Button>
+      <Button disabled={isEmpty(data)} variant="link" color="blue" onClick={() => setIsOpen(true)}>График продаж</Button>
       
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} size={"xl"}>
         <ModalOverlay />

@@ -1,7 +1,9 @@
-import { HStack, Heading, VStack } from "@chakra-ui/react"
+import { Button, HStack, Heading, VStack } from "@chakra-ui/react"
 import { AddClient } from "../components/clients/AddClient"
 import { ClientsList } from "../components/clients/ClientsList"
 import { PageContainer } from "../components/utility/PageContainer"
+import { DownloadIcon } from "@chakra-ui/icons"
+import { exportClients, exportTransactions } from "../api/profile"
 
 const MainPage = () => {
   return (
@@ -11,6 +13,14 @@ const MainPage = () => {
           <Heading size="md">
             Список клиентов:
           </Heading>
+        </HStack>
+        <HStack justifyContent="flex-end">
+          <Button leftIcon={<DownloadIcon />} colorScheme="blue" size="sm" onClick={() => {
+            exportClients();
+            exportTransactions();
+          }}>
+            Экспорт в CSV
+          </Button>
           <AddClient />
         </HStack>
         <ClientsList />

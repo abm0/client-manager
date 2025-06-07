@@ -7,12 +7,16 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from datetime import date, timedelta
 from django.db.models.functions import TruncWeek
+import csv
+from django.http import HttpResponse
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     permission_classes = [IsAuthenticated]
     
+    def get_queryset(self):
+        return Client.objects.filter(user=self.request.user)
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
@@ -65,6 +69,8 @@ class TransactionStatusViewSet(viewsets.ModelViewSet):
 
 
 class WeeklyTransactionView(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    
     def list(self, request, client_pk=None):
         today = date.today()
         start_date = today - timedelta(days=30)
@@ -97,3 +103,59 @@ class WeeklyTransactionView(viewsets.ViewSet):
             })
 
         return Response(result)
+    
+class ExportClientsCSV(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="clients.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow([
+            'Client ID', 'First Name', 'Last Name', 'Patronymic',
+            'Email', 'Phone', 'Company'
+        ])
+
+        clients = Client.objects.filter(user=request.user)
+
+        for client in clients:
+            writer.writerow([
+                client.id,
+                client.first_name,
+                client.last_name,
+                client.patronymic,
+                client.email,
+                client.phone,
+                client.company,
+            ])
+
+        return response
+    
+class ExportTransactionsCSV(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="transactions.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow([
+            'Transaction ID', 'Client ID', 'Client Name',
+            'Value', 'Date', 'Status'
+        ])
+
+        transactions = Transaction.objects.filter(client__user=request.user).select_related('client', 'status')
+
+        for tx in transactions:
+            client_name = f"{tx.client.first_name} {tx.client.last_name or ''}".strip()
+            writer.writerow([
+                tx.id,
+                tx.client.id,
+                client_name,
+                tx.value,
+                tx.date,
+                tx.status.name  # раскрытое значение статуса
+            ])
+
+        return response
